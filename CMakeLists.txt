@@ -50,7 +50,7 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
     set(GCC 1)
 endif()
 
-set(POWER 1)
+#set(POWER 1)
 
 if(INTEL_CXX)
     add_definitions(-xhost)
@@ -77,7 +77,7 @@ endif()
 
 set( CMAKE_CXX_STANDARD 11 )
 
-set( CMAKE_BUILD_TYPE Release)
+#set( CMAKE_BUILD_TYPE Release)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
@@ -117,19 +117,13 @@ CUDA_ADD_LIBRARY( cuda_louvain STATIC
   GpuGraph.cu
   #louvain_cuda_coreutils.cu
   #louvain_cuda_utils.cu
-  OPTIONS -arch sm_70
-      -gencode=arch=compute_70,code=sm_70
-  #-arch=sm_70
-    #-rdc=true
-    -std=c++11
-    --ptxas-options=-v
-    -Xcompiler -fopenmp
-    #-Xcompiler -qsmp=omp
-    -Xcompiler -fpermissive
-    -Xcompiler -mcpu=power9
-    -Xcompiler -mtune=power9
-    #-Xcompiler -qthreaded
-    #DEBUG -g -G
+  OPTIONS 
+  -gencode=arch=compute_60,code=sm_60
+  -gencode=arch=compute_80,code=sm_80
+  -std=c++11
+  -Xcompiler --std=c++11
+  -Xcompiler -fopenmp
+  -Xcompiler -fpermissive
 )
 
 target_link_libraries( cuda_louvain ${CUDA_LIBRARIES} )
