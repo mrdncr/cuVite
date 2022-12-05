@@ -119,6 +119,8 @@ CUDA_ADD_LIBRARY( cuda_louvain STATIC
   #louvain_cuda_utils.cu
   OPTIONS 
   -gencode=arch=compute_60,code=sm_60
+  -gencode=arch=compute_70,code=sm_70
+  -gencode=arch=compute_75,code=sm_75
   -gencode=arch=compute_80,code=sm_80
   -std=c++11
   -Xcompiler --std=c++11
