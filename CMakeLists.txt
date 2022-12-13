@@ -75,7 +75,7 @@ else()
     add_definitions(-DUSE_32_BIT_GRAPH)
 endif()
 
-set( CMAKE_CXX_STANDARD 11 )
+set( CMAKE_CXX_STANDARD 17 )
 
 #set( CMAKE_BUILD_TYPE Release)
 if(NOT CMAKE_BUILD_TYPE)
@@ -122,10 +122,6 @@ CUDA_ADD_LIBRARY( cuda_louvain STATIC
   -gencode=arch=compute_70,code=sm_70
   -gencode=arch=compute_75,code=sm_75
   -gencode=arch=compute_80,code=sm_80
-  -std=c++11
-  -Xcompiler --std=c++11
-  -Xcompiler -fopenmp
-  -Xcompiler -fpermissive
 )
 
 target_link_libraries( cuda_louvain ${CUDA_LIBRARIES} )

@@ -1,2 +1,6 @@
 build
+build_32bits
+build_64bits
 install
+.cache
+.vscode
