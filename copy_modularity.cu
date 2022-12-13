@@ -114,7 +114,7 @@ void gpu_reduce_mod(CommVector &localCinfo, const GraphWeightVector &clusterWeig
   CUDA_SAFE(cudaMemset(dev_sumDegree, 0, sizeof(GraphWeight)));
   CUDA_SAFE(cudaMemset(dev_sumWeight, 0, sizeof(GraphWeight)));
 
-#pragma omp parallel default(none), \
+#pragma omp parallel default(shared), \
        shared(localCinfo, temp_ModlocalCinfo_degree)
 #pragma omp for schedule(guided)
   for(int ii=0; ii<localCinfo.size(); ii++) {

@@ -58,7 +58,7 @@ void updateLocalTarget_gpu (
      ) {
 
     // omp_set_num_threads(7);
-#pragma omp parallel default(none), shared(nv, localCupdate, currComm, \
+#pragma omp parallel default(shared), shared(nv, localCupdate, currComm, \
         targetComm, vDegree, remoteCupdate, \
         temp_targetComm, numIters)
 #pragma omp for schedule(guided)
@@ -1736,7 +1736,7 @@ int gpu_for_louvain_iteration(
   { //call CPU function
   omp_set_num_threads(8);
 
-#pragma omp parallel default(none), shared(clusterWeight, localCupdate, currComm, targetComm, \
+#pragma omp parallel default(shared), shared(clusterWeight, localCupdate, currComm, targetComm, \
         vDegree, localCinfo, remoteCinfo, remoteComm, dg, remoteCupdate, me, \
         temp_targetComm_cpu, num_vertex_gpu), \
         firstprivate(constantForSecondTerm)
@@ -1774,7 +1774,7 @@ int gpu_for_louvain_iteration(
   GraphElem* temp_ModlocalCinfo_size = gpu_graph.getPinned_ModlocalCinfo_size();
   GraphWeight* temp_ModlocalCinfo_degree = gpu_graph.getPinned_ModlocalCinfo_degree(); 
 
-#pragma omp parallel default(none), \
+#pragma omp parallel default(shared), \
        shared(localCinfo, temp_ModlocalCinfo_size, temp_ModlocalCinfo_degree)
 #pragma omp for schedule(guided)
   for(int ii=0; ii<localCinfo.size(); ii++) {
@@ -1835,7 +1835,7 @@ int gpu_for_louvain_iteration(
   GraphElem temp_tail;
   GraphElem temp_comm, temp_comm_mapped;
   // First modify currComm
-#pragma omp parallel default(none), \
+#pragma omp parallel default(shared), \
        shared(ModcurrComm, localCinfo_to_remoteCinfo_map), \
        private(temp_comm, storedAlready_comm)
 #pragma omp for schedule(guided)
@@ -1886,7 +1886,7 @@ int gpu_for_louvain_iteration(
   GraphElem* temp_graph_edgeList_tail = gpu_graph.getPinned_edgeList_tail();
   GraphWeight* temp_graph_edgeList_weight = gpu_graph.getPinned_edgeList_weight();
 
-#pragma omp parallel default(none), shared(g, temp_graph_edgeList_tail, \
+#pragma omp parallel default(shared), shared(g, temp_graph_edgeList_tail, \
         temp_graph_edgeList_weight, remoteComm_to_currComm_map_v), \
         private(storedAlready)
 #pragma omp for schedule(guided)
@@ -2247,7 +2247,7 @@ if(numIters == 1)
   GraphWeight* temp_ModlocalCinfo_degree = gpu_graph.getPinned_ModlocalCinfo_degree(); 
 
 
-#pragma omp parallel default(none), \
+#pragma omp parallel default(shared), \
        shared(localCinfo, temp_ModlocalCinfo_size, temp_ModlocalCinfo_degree)
 #pragma omp for schedule(guided)
   for(int ii=0; ii<localCinfo.size(); ii++) {
@@ -2308,7 +2308,7 @@ if(numIters == 1)
   GraphElem temp_tail;
   GraphElem temp_comm, temp_comm_mapped;
   // First modify currComm
-#pragma omp parallel default(none), \
+#pragma omp parallel default(shared), \
        shared(ModcurrComm, localCinfo_to_remoteCinfo_map), \
        private(temp_comm, storedAlready_comm)
 #pragma omp for schedule(guided)
@@ -2358,7 +2358,7 @@ if(numIters == 1)
   GraphElem* temp_graph_edgeList_tail = gpu_graph.getPinned_edgeList_tail();
   GraphWeight* temp_graph_edgeList_weight = gpu_graph.getPinned_edgeList_weight();
 
-#pragma omp parallel default(none), shared(g, temp_graph_edgeList_tail, \
+#pragma omp parallel default(shared), shared(g, temp_graph_edgeList_tail, \
         temp_graph_edgeList_weight, remoteComm_to_currComm_map_v), \
         private(storedAlready)
 #pragma omp for schedule(guided)
